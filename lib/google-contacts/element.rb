@@ -50,10 +50,10 @@ module GContacts
         end
       end
 
-      if entry["gContact:groupMembershipInfo"].is_a?(Hash)
-        @modifier_flag = :delete if entry["gContact:groupMembershipInfo"]["@deleted"] == "true"
-        @group_id = entry["gContact:groupMembershipInfo"]["@href"]
-      end
+      # if entry["gContact:groupMembershipInfo"].is_a?(Hash)
+      #   @modifier_flag = :delete if entry["gContact:groupMembershipInfo"]["@deleted"] == "true"
+      #   @group_id = entry["gContact:groupMembershipInfo"]["@href"]
+      # end
 
       # Need to know where to send the update request
       if entry["link"].is_a?(Array)
