@@ -142,6 +142,7 @@ module GContacts
         data.each do |value|
           xml << write_tag(tag, value, indent)
         end
+        xml << "</#{tag}>\n" if tag == 'gContact:userDefinedField'
       else
         xml = write_tag(tag, data, indent)
       end
