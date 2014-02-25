@@ -142,7 +142,6 @@ module GContacts
         data.each do |value|
           xml << write_tag(tag, value, indent)
         end
-        xml << "</#{tag}>\n" if tag == 'gContact:userDefinedField'
       else
         xml = write_tag(tag, data, indent)
       end
@@ -179,6 +178,10 @@ module GContacts
       if !data.is_a?(Array) and !data.is_a?(Hash)
         xml << ">"
         xml << data.to_s
+        xml << "</#{tag}>\n"
+        return xml
+      elsif tag == 'gContact:userDefinedField'
+        xml << "/>\n"
         xml << "</#{tag}>\n"
         return xml
       # No other data to show, was just attributes
