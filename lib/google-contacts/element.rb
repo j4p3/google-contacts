@@ -181,7 +181,7 @@ module GContacts
         xml << "</#{tag}>\n"
         return xml
       elsif tag == 'gContact:userDefinedField'
-        xml << "/>\n"
+        xml << ">\n"
         xml << "</#{tag}>\n"
         return xml
       # No other data to show, was just attributes
