@@ -234,6 +234,7 @@ module GContacts
 
       query_string = build_query_string(args[:params])
       request_uri = query_string ? "#{uri.request_uri}?#{query_string}" : uri.request_uri
+      puts args[:params].inspect
 
       # GET
       if method == :get

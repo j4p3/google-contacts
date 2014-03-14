@@ -1,6 +1,6 @@
 module GContacts
   class Element
-    attr_accessor :title, :content, :data, :category, :etag, :group_id
+    attr_accessor :title, :content, :data, :category, :etag, :group_id, :photo
     attr_reader :id, :edit_uri, :modifier_flag, :updated, :batch
 
     ##
@@ -50,17 +50,20 @@ module GContacts
         end
       end
 
-      # if entry["gContact:groupMembershipInfo"].is_a?(Hash)
-      #   @modifier_flag = :delete if entry["gContact:groupMembershipInfo"]["@deleted"] == "true"
-      #   @group_id = entry["gContact:groupMembershipInfo"]["@href"]
-      # end
+      if entry["gContact:groupMembershipInfo"].is_a?(Hash)
+        # Caused update issues.
+        # @modifier_flag = :delete if entry["gContact:groupMembershipInfo"]["@deleted"] == "true"
+        @group_id = entry["gContact:groupMembershipInfo"]["@href"]
+      end
 
-      # Need to know where to send the update request
+      # Pull edit_uri and photo uri
       if entry["link"].is_a?(Array)
         entry["link"].each do |link|
           if link["@rel"] == "edit"
             @edit_uri = URI(link["@href"])
             break
+          elsif URI.parse(link["@rel"]).fragment == "photo"
+            @photo = URI(link["@href"])
           end
         end
       end
