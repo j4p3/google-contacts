@@ -63,7 +63,7 @@ module GContacts
             @edit_uri = URI(link["@href"])
             break
           elsif URI.parse(link["@rel"]).fragment == "photo"
-            @photo = URI(link["@href"])
+            @photo = URI(link["@href"]).to_s
           end
         end
       end
