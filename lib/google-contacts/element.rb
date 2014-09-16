@@ -11,7 +11,7 @@ module GContacts
       @data = {}
       return unless entry
 
-      @id, @updated, @content, @title, @etag = entry["id"], Time.parse(entry["updated"]), entry["content"], entry["title"], entry["@gd:etag"]
+      @id,@content, @title, @etag = entry["id"], entry["content"], entry["title"], entry["@gd:etag"]
       if entry["category"]
         @category = entry["category"]["@term"].split("#", 2).last
         @category_tag = entry["category"]["@label"] if entry["category"]["@label"]
@@ -88,7 +88,6 @@ module GContacts
 
       unless @modifier_flag == :delete
         xml << "  <atom:category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2008##{@category}'/>\n"
-        xml << "  <updated>#{Time.now.utc.iso8601}</updated>\n"
         xml << "  <atom:content type='text'>#{@content}</atom:content>\n"
         xml << "  <atom:title>#{@title}</atom:title>\n"
         xml << "  <gContact:groupMembershipInfo deleted='false' href='#{@group_id}'/>\n" if @group_id
@@ -132,7 +131,7 @@ module GContacts
     def has_modifier?; !!@modifier_flag end
 
     def inspect
-      "#<#{self.class.name} title: \"#{@title}\", updated: \"#{@updated}\">"
+      "#<#{self.class.name} title: \"#{@title}\""
     end
 
     alias to_s inspect
